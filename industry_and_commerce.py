@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import time
+
 from geetest import BaseGeetestCrack
 from selenium import webdriver
 
@@ -27,6 +29,8 @@ def main():
     driver.get("http://gsxt.hljaic.gov.cn/index.jspx")
     cracker = IndustryAndCommerceGeetestCrack(driver)
     cracker.crack()
+    time.sleep(10)
+    driver.close()
 
 
 if __name__ == "__main__":

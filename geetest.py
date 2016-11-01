@@ -90,7 +90,7 @@ class BaseGeetestCrack(object):
 
         screenshot = Image.open(StringIO.StringIO(screenshot))
         captcha = screenshot.crop((left, top, right, bottom))
-        captcha.save("%s.png" % uuid.uuid4().get_hex())
+        # captcha.save("%s.png" % uuid.uuid4().get_hex())
         return captcha
 
     def drag_and_drop(self, x_offset=0, y_offset=0, element_class="gt_slider_knob"):
