@@ -1,1 +1,1 @@
-![Crack Geetest](./crack-geetest.git)
+![Crack Geetest](./crack-geetest.gif)
