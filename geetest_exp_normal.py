@@ -5,27 +5,26 @@ from geetest import BaseGeetestCrack
 from selenium import webdriver
 
 
-class IndustryAndCommerceGeetestCrack(BaseGeetestCrack):
+class ExpNormalGeetestCrack(BaseGeetestCrack):
 
     """工商滑动验证码破解类"""
 
     def __init__(self, driver):
-        super(IndustryAndCommerceGeetestCrack, self).__init__(driver)
+        super(ExpNormalGeetestCrack, self).__init__(driver)
 
     def crack(self):
         """执行破解程序
 
         """
-        self.input_by_id()
-        self.click_by_id()
+        self.move_to_element()
         x_offset = self.calculate_slider_offset()
         self.drag_and_drop(x_offset=x_offset)
 
 
 def main():
     driver = webdriver.Chrome()
-    driver.get("http://gsxt.hljaic.gov.cn/index.jspx")
-    cracker = IndustryAndCommerceGeetestCrack(driver)
+    driver.get("http://www.geetest.com/exp_normal")
+    cracker = ExpNormalGeetestCrack(driver)
     cracker.crack()
 
 
