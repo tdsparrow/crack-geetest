@@ -25,11 +25,13 @@ class IndustryAndCommerceGeetestCrack(BaseGeetestCrack):
 
 
 def main():
-    driver = webdriver.Chrome()
+    driver = webdriver.PhantomJS()
     driver.get("http://gsxt.hljaic.gov.cn/index.jspx")
     cracker = IndustryAndCommerceGeetestCrack(driver)
     cracker.crack()
+    print(driver.get_window_size())
     time.sleep(10)
+    driver.save_screenshot("screen.png")
     driver.close()
 
 

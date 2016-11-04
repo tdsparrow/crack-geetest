@@ -14,6 +14,8 @@ class BaseGeetestCrack(object):
 
     def __init__(self, driver):
         self.driver = driver
+        self.driver.set_window_position(0, 0)
+        self.driver.set_window_size(1024, 768)
 
     def input_by_id(self, text=u"中国移动", element_id="searchText"):
         """输入查询关键词
@@ -66,7 +68,7 @@ class BaseGeetestCrack(object):
     def is_pixel_equal(self, img1, img2, x, y):
         pix1 = img1.load()[x, y]
         pix2 = img2.load()[x, y]
-        if (abs(pix1[0] - pix2[0] < 50) and abs(pix1[1] - pix2[1] < 50) and abs(pix1[2] - pix2[2] < 50)):
+        if (abs(pix1[0] - pix2[0] < 60) and abs(pix1[1] - pix2[1] < 60) and abs(pix1[2] - pix2[2] < 60)):
             return True
         else:
             return False
@@ -81,17 +83,29 @@ class BaseGeetestCrack(object):
         captcha_el = self.driver.find_element_by_class_name(element_id)
         location = captcha_el.location
         size = captcha_el.size
-        left = int(location['x'] - 92)
-        top = int(location['y'])
-        right = int(location['x'] - 92 + size['width'])
-        bottom = int(location['y'] + size['height'])
+        browser_x_offset = 0
+        browser_y_offset = 0
+        if 'phantomjs' == self.get_browser_name():
+            browser_x_offset += 171
+            browser_y_offset += 7
+        left = int(location['x'] + browser_x_offset)
+        top = int(location['y'] + browser_y_offset)
+        right = int(location['x'] + browser_x_offset + size['width'])
+        bottom = int(location['y'] + browser_y_offset + size['height'])
 
         screenshot = self.driver.get_screenshot_as_png()
 
         screenshot = Image.open(StringIO.StringIO(screenshot))
         captcha = screenshot.crop((left, top, right, bottom))
-        # captcha.save("%s.png" % uuid.uuid4().get_hex())
+        captcha.save("%s.png" % uuid.uuid4().get_hex())
         return captcha
+
+    def get_browser_name(self):
+        """获取当前使用浏览器名称
+        :returns: TODO
+
+        """
+        return str(self.driver).split('.')[2]
 
     def drag_and_drop(self, x_offset=0, y_offset=0, element_class="gt_slider_knob"):
         """拖拽滑块
