@@ -27,6 +27,7 @@ class BaseGeetestCrack(object):
         input_el = self.driver.find_element_by_id(element_id)
         input_el.clear()
         input_el.send_keys(text)
+        time.sleep(3.5)
 
     def click_by_id(self, element_id="u85"):
         """点击查询按钮
@@ -36,7 +37,7 @@ class BaseGeetestCrack(object):
         """
         search_el = self.driver.find_element_by_id(element_id)
         search_el.click()
-        time.sleep(.5)
+        time.sleep(3.5)
 
     def calculate_slider_offset(self):
         """计算滑块偏移位置，必须在点击查询按钮之后调用
@@ -119,7 +120,7 @@ class BaseGeetestCrack(object):
         action = ActionChains(self.driver)
         action.drag_and_drop_by_offset(dragger, x_offset, y_offset).perform()
         # 这个延时必须有，在滑动后等待回复原状
-        time.sleep(3)
+        time.sleep(8)
 
     def move_to_element(self, element_class="gt_slider_knob"):
         """鼠标移动到网页元素上
@@ -127,11 +128,11 @@ class BaseGeetestCrack(object):
         :element: 目标网页元素
 
         """
-        time.sleep(2)
+        time.sleep(3)
         element = self.driver.find_element_by_class_name(element_class)
         action = ActionChains(self.driver)
         action.move_to_element(element).perform()
-        time.sleep(.5)
+        time.sleep(4.5)
 
     def crack(self):
         """执行破解程序
