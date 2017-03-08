@@ -14,10 +14,9 @@ class BaseGeetestCrack(object):
 
     def __init__(self, driver):
         self.driver = driver
-        self.driver.set_window_position(0, 0)
-        self.driver.set_window_size(1024, 768)
+        self.driver.maximize_window()
 
-    def input_by_id(self, text=u"中国移动", element_id="searchText"):
+    def input_by_id(self, text=u"中国移动", element_id="keyword_qycx"):
         """输入查询关键词
 
         :text: Unicode, 要输入的文本
@@ -29,7 +28,7 @@ class BaseGeetestCrack(object):
         input_el.send_keys(text)
         time.sleep(3.5)
 
-    def click_by_id(self, element_id="u85"):
+    def click_by_id(self, element_id="popup-submit"):
         """点击查询按钮
 
         :element_id: 查询按钮网页元素id
@@ -84,15 +83,15 @@ class BaseGeetestCrack(object):
         captcha_el = self.driver.find_element_by_class_name(element_id)
         location = captcha_el.location
         size = captcha_el.size
-        browser_x_offset = 0
-        browser_y_offset = 0
-        if 'phantomjs' == self.get_browser_name():
-            browser_x_offset += 171
-            browser_y_offset += 7
-        left = int(location['x'] + browser_x_offset)
-        top = int(location['y'] + browser_y_offset)
-        right = int(location['x'] + browser_x_offset + size['width'])
-        bottom = int(location['y'] + browser_y_offset + size['height'])
+        left = int(location['x'])
+        top = int(location['y'])
+        left = 1010
+        top = 535
+        # right = left + int(size['width'])
+        # bottom = top + int(size['height'])
+        right = left + 523
+        bottom = top + 235
+        print(left, top, right, bottom)
 
         screenshot = self.driver.get_screenshot_as_png()
 
