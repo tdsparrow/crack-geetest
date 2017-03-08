@@ -6,7 +6,7 @@ $ brew install python
 ```
 ### Python Libs
 ```bash
-$ pip install -r ./requirement.txt
+$ pip install -r ./requirements.txt
 ```
 ### PhantomJS
 ```bash
