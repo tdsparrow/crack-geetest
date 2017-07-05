@@ -53,7 +53,7 @@ class BaseGeetestCrack(object):
             return False
         left = 0
         flag = False
-        for i in xrange(45, w1):
+        for i in xrange(60, w1):
             for j in xrange(h1):
                 if not self.is_pixel_equal(img1, img2, i, j):
                     left = i
@@ -63,7 +63,7 @@ class BaseGeetestCrack(object):
                 break
         if left == 45:
             left -= 2
-        return left
+        return left-7
 
     def is_pixel_equal(self, img1, img2, x, y):
         pix1 = img1.load()[x, y]
@@ -85,8 +85,8 @@ class BaseGeetestCrack(object):
         size = captcha_el.size
         left = int(location['x'])
         top = int(location['y'])
-        left = 1010
-        top = 535
+#        left = 1010
+#        top = 535
         # right = left + int(size['width'])
         # bottom = top + int(size['height'])
         right = left + 523
@@ -117,6 +117,7 @@ class BaseGeetestCrack(object):
         """
         dragger = self.driver.find_element_by_class_name(element_class)
         action = ActionChains(self.driver)
+
         action.drag_and_drop_by_offset(dragger, x_offset, y_offset).perform()
         # 这个延时必须有，在滑动后等待回复原状
         time.sleep(8)
