@@ -16,7 +16,7 @@ class BaseGeetestCrack(object):
         self.driver = driver
         self.driver.maximize_window()
 
-    def input_by_id(self, text=u"中国移动", element_id="keyword_qycx"):
+    def input_by_id(self, text=u"中国移动", element_id="keyword"):
         """输入查询关键词
 
         :text: Unicode, 要输入的文本
@@ -28,7 +28,7 @@ class BaseGeetestCrack(object):
         input_el.send_keys(text)
         time.sleep(3.5)
 
-    def click_by_id(self, element_id="popup-submit"):
+    def click_by_id(self, element_id="btn_query"):
         """点击查询按钮
 
         :element_id: 查询按钮网页元素id
@@ -45,7 +45,7 @@ class BaseGeetestCrack(object):
 
         """
         img1 = self.crop_captcha_image()
-        self.drag_and_drop(x_offset=5)
+        self.click_and_hold_slider()
         img2 = self.crop_captcha_image()
         w1, h1 = img1.size
         w2, h2 = img2.size
@@ -107,6 +107,11 @@ class BaseGeetestCrack(object):
         """
         return str(self.driver).split('.')[2]
 
+    def click_and_hold_slider(self, element_class="gt_slider_knob"):
+        self.move_to_element(element_class)
+        action = ActionChains(self.driver)
+        action.click_and_hold().perform()
+
     def drag_and_drop(self, x_offset=0, y_offset=0, element_class="gt_slider_knob"):
         """拖拽滑块
 
@@ -118,9 +123,27 @@ class BaseGeetestCrack(object):
         dragger = self.driver.find_element_by_class_name(element_class)
         action = ActionChains(self.driver)
 
-        action.drag_and_drop_by_offset(dragger, x_offset, y_offset).perform()
+        self.move_to_element(element_class)
+        action.click_and_hold().perform()
+
+        import random
+        for m in xrange(x_offset):
+            action.move_by_offset(1,0)
+            time.sleep(random.randint(2,4)/100)
+
+        # action.drag_and_drop_by_offset(dragger, x_offset, y_offset).perform()
+        action.release().perform()
         # 这个延时必须有，在滑动后等待回复原状
         time.sleep(8)
+
+    def move_by_offset_and_release(self, x_offset=0):
+        import random
+        action = ActionChains(self.driver)
+        for m in xrange(x_offset):
+            action.move_by_offset(1,random.choice([-1,-2,1,2]))
+            time.sleep(random.randint(2,2+m*2)/100)
+
+        action.release().perform()
 
     def move_to_element(self, element_class="gt_slider_knob"):
         """鼠标移动到网页元素上

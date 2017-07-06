@@ -20,13 +20,14 @@ class IndustryAndCommerceGeetestCrack(BaseGeetestCrack):
         self.input_by_id()
         self.click_by_id()
         time.sleep(2)
+
         x_offset = self.calculate_slider_offset()
-        self.drag_and_drop(x_offset=x_offset)
+        self.move_by_offset_and_release(x_offset=x_offset)
 
 
 def main():
     driver = webdriver.Chrome()
-    driver.get("http://bj.gsxt.gov.cn/sydq/loginSydqAction!sydq.dhtml")
+    driver.get("http://www.gsxt.gov.cn/index.html")
     cracker = IndustryAndCommerceGeetestCrack(driver)
     cracker.crack()
     print(driver.get_window_size())
